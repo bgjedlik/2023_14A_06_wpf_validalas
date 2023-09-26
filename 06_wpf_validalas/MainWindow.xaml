@@ -1,0 +1,64 @@
+﻿<Window x:Class="_06_wpf_validalas.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:_06_wpf_validalas"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="450" Width="800" FontSize="16">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Foreground" Value="Blue"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Style.Triggers>
+                <Trigger Property="Validation.HasError" Value="True">
+                    <Setter Property="ToolTip" 
+                        Value="{Binding RelativeSource={x:Static RelativeSource.Self},
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+                    <Setter Property="Background" Value="red"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+    <Grid>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Name:" Width="100" Margin="5"/>
+                <TextBox x:Name="TB_name" Width="100" Margin="5"
+                        Text="{Binding name, 
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    ValidatesOnDataErrors=True}"
+                         />
+                <Label Margin="5" Foreground="Red"
+                       Content="{Binding ElementName=TB_name,
+                    Path=(Validation.Errors)[0].ErrorContent}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="Age:" Width="100" Margin="5"/>
+                <TextBox x:Name="TB_age" Width="100" Margin="5"
+                         Text="{Binding age, 
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    ValidatesOnDataErrors=True}"/>
+                <Label Margin="5" Foreground="Red"
+                            Content="{Binding ElementName=TB_age,
+                            Path=(Validation.Errors)[0].ErrorContent}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <Label Content="IP Address:" Width="100" Margin="5"/>
+                <TextBox x:Name="TB_ipaddress" Width="100" Margin="5"
+                         Text="{Binding ipAddress, 
+                                    UpdateSourceTrigger=PropertyChanged,
+                                    ValidatesOnDataErrors=True}"/>
+                <Label Margin="5" Foreground="Red"
+                        Content="{Binding ElementName=TB_ipaddress,
+                        Path=(Validation.Errors)[0].ErrorContent}"/>
+            </StackPanel>
+            <Button x:Name="BTN_save" Content="Save" HorizontalAlignment="Left"
+                    Margin="115,5,5,5" Padding="25,5,25,5"
+                    Click="BTN_save_Click"/>
+
+            <Label Content="Saved data:" Margin="5"/>
+            <Label Content="" Margin="5"/>
+        </StackPanel>
+    </Grid>
+</Window>
